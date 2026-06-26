@@ -1,0 +1,31 @@
+{
+  "name": "petvida-db",
+  "version": "1.0.0",
+  "description": "Projeto de banco de dados relacional para gerenciamento de clínica veterinária. Inclui tabelas, views, functions, triggers e procedures com exemplo de uso.",
+  "main": "server.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AlexandreCalmon-devBa/petvida-db.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/AlexandreCalmon-devBa/petvida-db/issues"
+  },
+  "homepage": "https://github.com/AlexandreCalmon-devBa/petvida-db#readme",
+  "dependencies": {
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "mysql2": "^3.22.5"
+  }
+}
