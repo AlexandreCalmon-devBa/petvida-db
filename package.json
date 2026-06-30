@@ -7,7 +7,8 @@
     "test": "test"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
+    "test:report": "jest --reporters=default --reporters=jest-html-reporter",
     "start": "node server.js",
     "dev": "node server.js"
   },
@@ -28,5 +29,10 @@
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
     "mysql2": "^3.22.5"
+  },
+  "devDependencies": {
+    "jest": "^30.4.2",
+    "jest-html-reporter": "^4.4.0",
+    "supertest": "^7.2.2"
   }
 }

@@ -1,0 +1,189 @@
+{
+  "info": {
+    "name": "PetVida API",
+    "description": "Testes dos 8 endpoints solicitados na Tarefa 8",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1. GET /api/veterinarios",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://localhost:3000/api/veterinarios",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "veterinarios"
+          ]
+        }
+      }
+    },
+    {
+      "name": "2. GET /api/animais",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://localhost:3000/api/animais",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "animais"
+          ]
+        }
+      }
+    },
+    {
+      "name": "3. GET /api/agenda/:data",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://localhost:3000/api/agenda/2025-01-19",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "agenda",
+            "2025-01-19"
+          ]
+        }
+      }
+    },
+    {
+      "name": "4. POST /api/consultas",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"animal_id\": 2,\n  \"veterinario_id\": 1,\n  \"data_hora\": \"2025-10-10 10:00:00\",\n  \"valor\": 150.00\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/consultas",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "consultas"
+          ]
+        }
+      }
+    },
+    {
+      "name": "5. PUT /api/consultas/:id/concluir",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"diagnostico\": \"Exame de sangue e checkup geral.\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/consultas/14/concluir",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "consultas",
+            "14",
+            "concluir"
+          ]
+        }
+      }
+    },
+    {
+      "name": "6. POST /api/pagamentos/:consulta_id",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"forma_pagamento\": \"pix\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/pagamentos/14",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "pagamentos",
+            "14"
+          ]
+        }
+      }
+    },
+    {
+      "name": "7. GET /api/relatorios/dashboard",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://localhost:3000/api/relatorios/dashboard",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "relatorios",
+            "dashboard"
+          ]
+        }
+      }
+    },
+    {
+      "name": "8. GET /api/relatorios/inadimplentes",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://localhost:3000/api/relatorios/inadimplentes",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "relatorios",
+            "inadimplentes"
+          ]
+        }
+      }
+    }
+  ]
+}
