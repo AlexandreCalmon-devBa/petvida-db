@@ -1,5 +1,20 @@
 const express = require('express');
 const router = express.Router();
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger.json');
+
+// Opções de personalização visual do Swagger
+const swaggerOptions = {
+  customCss: `
+    .swagger-ui .topbar { background-color: #2c3e50; border-bottom: 3px solid #18bc9c; }
+    .swagger-ui .info .title { color: #2c3e50; }
+    .swagger-ui .opblock.opblock-get .opblock-summary-method { background: #18bc9c; }
+  `,
+  customSiteTitle: "API Docs - Clínica PetVida"
+};
+
+// Documentação Swagger
+router.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, swaggerOptions));
 const db = require('./config/database');
 
 // Importa rotas

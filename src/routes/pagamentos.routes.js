@@ -28,4 +28,51 @@ router.post('/:consulta_id', async (req, res) => {
   }
 });
 
+// GET /api/pagamentos
+router.get('/', async (req, res) => {
+  try {
+    const [rows] = await db.query('SELECT * FROM pagamentos');
+    res.json(rows);
+  } catch (error) {
+    res.status(500).json({ erro: 'Erro ao listar pagamentos', detalhes: error.message });
+  }
+});
+
+// GET /api/pagamentos/:id
+router.get('/:id', async (req, res) => {
+  try {
+    const [rows] = await db.query('SELECT * FROM pagamentos WHERE id = ?', [req.params.id]);
+    if (rows.length === 0) return res.status(404).json({ erro: 'Pagamento não encontrado' });
+    res.json(rows[0]);
+  } catch (error) {
+    res.status(500).json({ erro: 'Erro ao buscar pagamento', detalhes: error.message });
+  }
+});
+
+// PUT /api/pagamentos/:id
+router.put('/:id', async (req, res) => {
+  try {
+    const { valor_pago, forma_pagamento, status } = req.body;
+    const [result] = await db.query(
+      'UPDATE pagamentos SET valor_pago=?, forma_pagamento=?, status=? WHERE id=?',
+      [valor_pago, forma_pagamento, status, req.params.id]
+    );
+    if (result.affectedRows === 0) return res.status(404).json({ erro: 'Pagamento não encontrado' });
+    res.json({ mensagem: 'Pagamento atualizado com sucesso' });
+  } catch (error) {
+    res.status(500).json({ erro: 'Erro ao atualizar pagamento', detalhes: error.message });
+  }
+});
+
+// DELETE /api/pagamentos/:id
+router.delete('/:id', async (req, res) => {
+  try {
+    const [result] = await db.query('DELETE FROM pagamentos WHERE id = ?', [req.params.id]);
+    if (result.affectedRows === 0) return res.status(404).json({ erro: 'Pagamento não encontrado' });
+    res.json({ mensagem: 'Pagamento deletado com sucesso' });
+  } catch (error) {
+    res.status(500).json({ erro: 'Erro ao deletar pagamento', detalhes: error.message });
+  }
+});
+
 module.exports = router;

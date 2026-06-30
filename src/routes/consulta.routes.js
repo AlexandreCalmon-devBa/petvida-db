@@ -57,4 +57,36 @@ router.put('/:id/concluir', async (req, res) => {
   }
 });
 
+// GET /api/consultas — Listar todas
+router.get('/', async (req, res) => {
+  try {
+    const [rows] = await db.query('SELECT * FROM consultas');
+    res.json(rows);
+  } catch (error) {
+    res.status(500).json({ erro: 'Erro ao buscar consultas', detalhes: error.message });
+  }
+});
+
+// GET /api/consultas/:id
+router.get('/:id', async (req, res) => {
+  try {
+    const [rows] = await db.query('SELECT * FROM consultas WHERE id = ?', [req.params.id]);
+    if (rows.length === 0) return res.status(404).json({ erro: 'Consulta não encontrada' });
+    res.json(rows[0]);
+  } catch (error) {
+    res.status(500).json({ erro: 'Erro ao buscar consulta', detalhes: error.message });
+  }
+});
+
+// DELETE /api/consultas/:id — chama sp_cancelar_consulta
+router.delete('/:id', async (req, res) => {
+  try {
+    const [rows] = await db.query('CALL sp_cancelar_consulta(?)', [req.params.id]);
+    res.json({ mensagem: 'Consulta cancelada com sucesso' });
+  } catch (error) {
+    if (error.sqlState === '45000') return res.status(422).json({ erro: error.message });
+    res.status(500).json({ erro: 'Erro ao cancelar consulta', detalhes: error.message });
+  }
+});
+
 module.exports = router;

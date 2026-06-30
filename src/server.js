@@ -19,6 +19,7 @@ app.listen(PORT, async () => {
   console.log('   🐾 PetVida API - Servidor Iniciado');
   console.log('===========================================\n');
   console.log(`🌐 URL base: http://localhost:${PORT}`);
+  console.log(`📘 Documentação Swagger: http://localhost:${PORT}/api-docs`);
   console.log('\n📋 Endpoints disponíveis:\n');
   console.log('   GET    /api/veterinarios');
   console.log('   GET    /api/animais');

@@ -1,0 +1,264 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "PetVida API",
+    "description": "API de gerenciamento da Clínica Veterinária PetVida.\n\n### 🚀 Como usar esta documentação:\n1. Clique em qualquer endpoint abaixo (ex: `GET /api/veterinarios`) para expandir.\n2. Clique no botão **Try it out** (Testar) no lado direito.\n3. Preencha os campos necessários (se houver).\n4. Clique no botão grande azul **Execute**.\n5. Role a tela para baixo para ver a **Server response** (Resposta do Servidor) que mostrará os dados do banco de dados!",
+    "version": "1.0.0",
+    "contact": {
+      "name": "Desenvolvedor Backend (Alexandre)",
+      "email": "contato@petvida.com.br",
+      "url": "https://github.com/AlexandreCalmon-devBa"
+    },
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000",
+      "description": "Servidor Local de Desenvolvimento"
+    }
+  ],
+  "tags": [
+    { "name": "Veterinários", "description": "Gestão de profissionais de saúde" },
+    { "name": "Animais", "description": "Gestão de pacientes e seus tutores" },
+    { "name": "Consultas", "description": "Agendamentos, históricos e status" },
+    { "name": "Pagamentos", "description": "Financeiro e faturamento de consultas" },
+    { "name": "Relatórios", "description": "Dashboards gerenciais e inadimplência" }
+  ],
+  "components": {
+    "schemas": {
+      "Veterinario": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer", "example": 1 },
+          "nome": { "type": "string", "example": "Dra. Ana Silva" },
+          "crmv": { "type": "string", "example": "CRMV-SP 12345" },
+          "especialidade": { "type": "string", "example": "Cirurgia" },
+          "telefone": { "type": "string", "example": "11999998888" }
+        }
+      },
+      "Animal": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer", "example": 2 },
+          "nome": { "type": "string", "example": "Rex" },
+          "especie_id": { "type": "integer", "example": 1 },
+          "raca": { "type": "string", "example": "Golden Retriever" },
+          "data_nascimento": { "type": "string", "format": "date", "example": "2020-05-10" },
+          "tutor_id": { "type": "integer", "example": 1 }
+        }
+      },
+      "AnimalDetalhado": {
+        "type": "object",
+        "properties": {
+          "animal_id": { "type": "integer", "example": 2 },
+          "animal": { "type": "string", "example": "Rex" },
+          "raca": { "type": "string", "example": "Golden Retriever" },
+          "especie": { "type": "string", "example": "Cachorro" },
+          "tutor": { "type": "string", "example": "Carlos Oliveira" },
+          "total_consultas": { "type": "integer", "example": 3 }
+        }
+      },
+      "Consulta": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer", "example": 1 },
+          "animal_id": { "type": "integer", "example": 2 },
+          "veterinario_id": { "type": "integer", "example": 1 },
+          "data_hora": { "type": "string", "format": "date-time", "example": "2026-10-10 10:00:00" },
+          "diagnostico": { "type": "string", "example": "Rotina" },
+          "valor": { "type": "number", "example": 150.00 },
+          "status": { "type": "string", "example": "agendada" }
+        }
+      },
+      "Pagamento": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer", "example": 1 },
+          "consulta_id": { "type": "integer", "example": 14 },
+          "valor_pago": { "type": "number", "example": 150.00 },
+          "forma_pagamento": { "type": "string", "example": "pix" },
+          "data_pagamento": { "type": "string", "format": "date-time", "example": "2026-10-10 11:00:00" },
+          "status": { "type": "string", "example": "pago" }
+        }
+      },
+      "Dashboard": {
+        "type": "object",
+        "properties": {
+          "total_consultas": { "type": "integer", "example": 45 },
+          "bruto": { "type": "string", "example": "5400.00" },
+          "recebido": { "type": "string", "example": "4800.00" },
+          "pendente": { "type": "string", "example": "600.00" },
+          "percentual_inadimplencia": { "type": "string", "example": "11.11" }
+        }
+      }
+    }
+  },
+  "paths": {
+    "/api/veterinarios": {
+      "get": {
+        "tags": ["Veterinários"],
+        "summary": "Listar todos",
+        "responses": { "200": { "description": "Sucesso", "content": { "application/json": { "schema": { "type": "array", "items": { "$ref": "#/components/schemas/Veterinario" } } } } } }
+      },
+      "post": {
+        "tags": ["Veterinários"],
+        "summary": "Criar novo",
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Veterinario" } } } },
+        "responses": { "201": { "description": "Criado com sucesso" } }
+      }
+    },
+    "/api/veterinarios/{id}": {
+      "get": {
+        "tags": ["Veterinários"],
+        "summary": "Buscar por ID",
+        "parameters": [{ "in": "path", "name": "id", "required": true, "schema": { "type": "integer" } }],
+        "responses": { "200": { "description": "Sucesso", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Veterinario" } } } }, "404": { "description": "Não encontrado" } }
+      },
+      "put": {
+        "tags": ["Veterinários"],
+        "summary": "Atualizar existente",
+        "parameters": [{ "in": "path", "name": "id", "required": true, "schema": { "type": "integer" } }],
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Veterinario" } } } },
+        "responses": { "200": { "description": "Atualizado com sucesso" } }
+      },
+      "delete": {
+        "tags": ["Veterinários"],
+        "summary": "Deletar",
+        "parameters": [{ "in": "path", "name": "id", "required": true, "schema": { "type": "integer" } }],
+        "responses": { "200": { "description": "Deletado com sucesso" }, "422": { "description": "Erro de chave estrangeira" } }
+      }
+    },
+    "/api/animais": {
+      "get": {
+        "tags": ["Animais"],
+        "summary": "Listar todos detalhados",
+        "responses": { "200": { "description": "Sucesso", "content": { "application/json": { "schema": { "type": "array", "items": { "$ref": "#/components/schemas/AnimalDetalhado" } } } } } }
+      },
+      "post": {
+        "tags": ["Animais"],
+        "summary": "Criar novo",
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Animal" } } } },
+        "responses": { "201": { "description": "Criado com sucesso" } }
+      }
+    },
+    "/api/animais/{id}": {
+      "get": {
+        "tags": ["Animais"],
+        "summary": "Buscar por ID",
+        "parameters": [{ "in": "path", "name": "id", "required": true, "schema": { "type": "integer" } }],
+        "responses": { "200": { "description": "Sucesso", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Animal" } } } }, "404": { "description": "Não encontrado" } }
+      },
+      "put": {
+        "tags": ["Animais"],
+        "summary": "Atualizar existente",
+        "parameters": [{ "in": "path", "name": "id", "required": true, "schema": { "type": "integer" } }],
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Animal" } } } },
+        "responses": { "200": { "description": "Atualizado com sucesso" } }
+      },
+      "delete": {
+        "tags": ["Animais"],
+        "summary": "Deletar",
+        "parameters": [{ "in": "path", "name": "id", "required": true, "schema": { "type": "integer" } }],
+        "responses": { "200": { "description": "Deletado com sucesso" }, "422": { "description": "Erro de chave estrangeira" } }
+      }
+    },
+    "/api/consultas": {
+      "get": {
+        "tags": ["Consultas"],
+        "summary": "Listar todas",
+        "responses": { "200": { "description": "Sucesso", "content": { "application/json": { "schema": { "type": "array", "items": { "$ref": "#/components/schemas/Consulta" } } } } } }
+      },
+      "post": {
+        "tags": ["Consultas"],
+        "summary": "Agendar nova (via procedure)",
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "type": "object", "properties": { "animal_id": { "type": "integer", "example": 2 }, "veterinario_id": { "type": "integer", "example": 1 }, "data_hora": { "type": "string", "example": "2026-10-10 10:00:00" }, "valor": { "type": "number", "example": 150.00 } } } } } },
+        "responses": { "201": { "description": "Agendada com sucesso" } }
+      }
+    },
+    "/api/consultas/{id}": {
+      "get": {
+        "tags": ["Consultas"],
+        "summary": "Buscar por ID",
+        "parameters": [{ "in": "path", "name": "id", "required": true, "schema": { "type": "integer" } }],
+        "responses": { "200": { "description": "Sucesso", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Consulta" } } } } }
+      },
+      "delete": {
+        "tags": ["Consultas"],
+        "summary": "Cancelar/Deletar",
+        "parameters": [{ "in": "path", "name": "id", "required": true, "schema": { "type": "integer" } }],
+        "responses": { "200": { "description": "Cancelada com sucesso" } }
+      }
+    },
+    "/api/consultas/{id}/concluir": {
+      "put": {
+        "tags": ["Consultas"],
+        "summary": "Concluir e dar diagnóstico",
+        "parameters": [{ "in": "path", "name": "id", "required": true, "schema": { "type": "integer" } }],
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "type": "object", "properties": { "diagnostico": { "type": "string", "example": "Tudo ok" } } } } } },
+        "responses": { "200": { "description": "Concluída com sucesso" } }
+      }
+    },
+    "/api/agenda/{data}": {
+      "get": {
+        "tags": ["Consultas"],
+        "summary": "Agenda de um dia específico",
+        "parameters": [{ "in": "path", "name": "data", "required": true, "schema": { "type": "string", "format": "date", "example": "2025-01-19" } }],
+        "responses": { "200": { "description": "Agenda diária retornada" } }
+      }
+    },
+    "/api/pagamentos": {
+      "get": {
+        "tags": ["Pagamentos"],
+        "summary": "Listar todos",
+        "responses": { "200": { "description": "Sucesso", "content": { "application/json": { "schema": { "type": "array", "items": { "$ref": "#/components/schemas/Pagamento" } } } } } }
+      }
+    },
+    "/api/pagamentos/{id}": {
+      "get": {
+        "tags": ["Pagamentos"],
+        "summary": "Buscar por ID",
+        "parameters": [{ "in": "path", "name": "id", "required": true, "schema": { "type": "integer" } }],
+        "responses": { "200": { "description": "Sucesso", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Pagamento" } } } } }
+      },
+      "put": {
+        "tags": ["Pagamentos"],
+        "summary": "Atualizar dados",
+        "parameters": [{ "in": "path", "name": "id", "required": true, "schema": { "type": "integer" } }],
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Pagamento" } } } },
+        "responses": { "200": { "description": "Atualizado com sucesso" } }
+      },
+      "delete": {
+        "tags": ["Pagamentos"],
+        "summary": "Deletar",
+        "parameters": [{ "in": "path", "name": "id", "required": true, "schema": { "type": "integer" } }],
+        "responses": { "200": { "description": "Deletado com sucesso" } }
+      }
+    },
+    "/api/pagamentos/{consulta_id}": {
+      "post": {
+        "tags": ["Pagamentos"],
+        "summary": "Registrar novo pagamento (via procedure)",
+        "parameters": [{ "in": "path", "name": "consulta_id", "required": true, "schema": { "type": "integer", "example": 14 } }],
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "type": "object", "properties": { "forma_pagamento": { "type": "string", "example": "pix" } } } } } },
+        "responses": { "200": { "description": "Pagamento registrado" } }
+      }
+    },
+    "/api/relatorios/dashboard": {
+      "get": {
+        "tags": ["Relatórios"],
+        "summary": "Dashboard Financeiro",
+        "responses": { "200": { "description": "Dados do dashboard", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Dashboard" } } } } }
+      }
+    },
+    "/api/relatorios/inadimplentes": {
+      "get": {
+        "tags": ["Relatórios"],
+        "summary": "Lista de Inadimplentes",
+        "responses": { "200": { "description": "Lista de devedores" } }
+      }
+    }
+  }
+}
