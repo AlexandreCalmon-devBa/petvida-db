@@ -6,12 +6,8 @@
     "version": "1.0.0",
     "contact": {
       "name": "Desenvolvedor Backend (Alexandre)",
-      "email": "contato@petvida.com.br",
+      "email": "[EMAIL_ADDRESS]",
       "url": "https://github.com/AlexandreCalmon-devBa"
-    },
-    "license": {
-      "name": "MIT",
-      "url": "https://opensource.org/licenses/MIT"
     }
   },
   "servers": [
