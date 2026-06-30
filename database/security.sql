@@ -96,3 +96,17 @@ GRANT EXECUTE ON PROCEDURE petvida.sp_cadastrar_animal TO 'gerente'@'localhost';
 GRANT ALL PRIVILEGES ON petvida.* TO 'admin'@'localhost' WITH GRANT OPTION;
 
 FLUSH PRIVILEGES;
+
+-- =============================================================================
+-- REVOKE: Remover acessos da recepcionista
+-- Exemplo de uso: quando a recepcionista é desligada ou muda de função.
+-- Descomente para executar.
+-- =============================================================================
+
+-- REVOKE SELECT, INSERT ON petvida.tutores FROM 'recepcionista'@'localhost';
+-- REVOKE SELECT, INSERT ON petvida.animais FROM 'recepcionista'@'localhost';
+-- REVOKE SELECT, INSERT ON petvida.consultas FROM 'recepcionista'@'localhost';
+-- REVOKE SELECT, INSERT ON petvida.especies FROM 'recepcionista'@'localhost';
+-- REVOKE EXECUTE ON PROCEDURE petvida.sp_agendar FROM 'recepcionista'@'localhost';
+-- REVOKE EXECUTE ON PROCEDURE petvida.sp_cadastrar FROM 'recepcionista'@'localhost';
+-- FLUSH PRIVILEGES;

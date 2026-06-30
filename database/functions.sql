@@ -76,7 +76,7 @@ DELIMITER ;
 -- =============================================================================
 DELIMITER $$
 
-CREATE FUNCTION fn_qtd_consultas_animal(animal_id INT)
+CREATE FUNCTION fn_qtd_consultas_animal(p_animal_id INT)
 RETURNS INT
 DETERMINISTIC
 READS SQL DATA
@@ -87,7 +87,7 @@ BEGIN
     SELECT COUNT(*)
     INTO total_consultas
     FROM consultas
-    WHERE animal_id = animal_id;
+    WHERE animal_id = p_animal_id;
     
     RETURN total_consultas;
 END$$

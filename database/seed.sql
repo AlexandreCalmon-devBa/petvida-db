@@ -76,7 +76,7 @@ INSERT INTO consultas (animal_id, veterinario_id, data_hora, diagnostico, valor,
 (14, 2, '2025-01-19 15:00:00', 'Check-up de rotina.',                      130.00, 'agendada'),
 (15, 3, '2025-01-20 10:15:00', 'Exame de bico e vacinação.',               170.00, 'agendada'),
 ( 1, 2, '2025-01-21 09:00:00', 'Retorno por ferimento leve.',              200.00, 'cancelada'),
-( 4, 3, '2025-01-22 14:00:00', 'Exame de sanitização bucal.',              180.00, 'pendente'),
+( 4, 3, '2025-01-22 14:00:00', 'Exame de sanitização bucal.',              180.00, 'agendada'),
 ( 7, 1, '2025-01-23 16:30:00', 'Acompanhamento de alimentação.',           190.00, 'em_atendimento'),
 (10, 2, '2025-01-24 11:45:00', 'Consulta preventiva.',                     145.00, 'agendada'),
 (12, 3, '2025-01-25 13:15:00', 'Controle pós-operatório.',                 275.00, 'agendada');
