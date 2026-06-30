@@ -9,8 +9,8 @@
   "scripts": {
     "test": "jest",
     "test:report": "jest --reporters=default --reporters=jest-html-reporter",
-    "start": "node server.js",
-    "dev": "node server.js"
+    "start": "node src/server.js",
+    "dev": "node src/server.js"
   },
   "repository": {
     "type": "git",

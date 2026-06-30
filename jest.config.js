@@ -4,7 +4,7 @@ module.exports = {
     'default',
     ['jest-html-reporter', {
       pageTitle: 'Relatório de Testes - PetVida API',
-      outputPath: './test-report.html',
+      outputPath: './reports/test-report.html',
       includeFailureMsg: true,
       includeSuiteFailure: true
     }]
