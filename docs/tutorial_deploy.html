@@ -20,7 +20,7 @@
 <script type="text/babel">
 const {useState,useEffect}=React;
 const C={dark:"#2E4059",darkH:"#3A5575",accent:"#3B82F6",green:"#059669",greenBg:"#ECFDF5",red:"#DC2626",redBg:"#FEF2F2",yellow:"#D97706",yellowBg:"#FEF3C7",white:"#FFF",g100:"#F8FAFC",g200:"#E2E8F0",g400:"#94A3B8",g600:"#475569",g800:"#1E293B",purple:"#7C3AED",purpleBg:"#F5F3FF",cyan:"#0891B2",orange:"#EA580C",codeBg:"#0D1117",codeText:"#C9D1D9"};
-const TABS=["🚀 Visão Geral","⚙️ 1. API (Node)","🐬 2. Banco (Aiven)","☁️ 3. Nuvem (Vercel)","📝 4. Bônus: Swagger","✅ Conclusão"];
+const TABS=["🚀 Visão Geral","⚙️ 1. API (Node)","🐬 2. Banco (Aiven)","☁️ 3. Nuvem (Vercel)","📝 4. Swagger (API Docs)","✅ Conclusão"];
 
 function App(){
   const [tab,setTab]=useState(0);
@@ -190,42 +190,60 @@ function App(){
           
           <div style={{textAlign:"center"}}>
             <p style={{fontSize:12,color:C.g600,marginBottom:14}}>Depois de adicionar e salvar as 5 variáveis, clique no botão azul gigante <strong>Deploy</strong> e aguarde a mágica! 🪄</p>
-            <button onClick={()=>setTab(4)} style={btn("primary")}>Ver Bônus do Swagger 📝 →</button>
+            <button onClick={()=>setTab(4)} style={btn("primary")}>Ver como criar o Swagger 📝 →</button>
           </div>
         </div>)}
 
         {/* ===== TAB 4: SWAGGER BONUS ===== */}
         {tab===4&&(<div>
-          <h2 style={{fontSize:19,color:C.g800,marginBottom:14}}>📝 Bônus: Swagger Perfeito no Vercel</h2>
+          <h2 style={{fontSize:19,color:C.g800,marginBottom:14}}>📝 4. Swagger: Como criar a página de Documentação API</h2>
           
-          <div style={{background:C.redBg,borderRadius:10,padding:14,border:"1px solid #FCA5A5",marginBottom:16}}>
-            <p style={{fontSize:13,color:C.red,fontWeight:600,marginBottom:4}}>⚠️ Erro "Unexpected token '&lt;'" no Vercel</p>
-            <p style={{fontSize:12,color:"#991B1B",lineHeight:1.6}}>Como o Vercel apaga arquivos estáticos invisíveis na nuvem, o pacote <code>swagger-ui-express</code> quebra ao tentar carregar o CSS e JS local, retornando uma página 404 de erro.</p>
+          <p style={{fontSize:12,color:C.g600,marginBottom:10}}>Você pode criar uma interface de testes visual incrível (igual do projeto PetVida) para suas próprias APIs em 3 passos:</p>
+
+          <div style={{background:C.greenBg,borderRadius:10,padding:14,border:"1px solid #6EE7B7",marginBottom:16}}>
+            <p style={{fontSize:13,color:C.green,fontWeight:600,marginBottom:4}}>Passo A: Instalar a biblioteca</p>
+            <p style={{fontSize:12,color:"#065F46",lineHeight:1.6}}>No terminal do seu projeto, instale o pacote <code>swagger-ui-express</code>:</p>
+            <Code code="npm install swagger-ui-express" title="Terminal" />
           </div>
 
-          <p style={{fontSize:12,color:C.g600,marginBottom:10}}>A solução definitiva é configurar o Swagger para carregar os recursos através de uma CDN (Cloudflare). Copie o código abaixo e cole no seu arquivo de rotas/app:</p>
+          <div style={{background:C.g100,borderRadius:10,padding:14,border:`1px solid ${C.g200}`,marginBottom:16}}>
+            <p style={{fontSize:13,color:C.g800,fontWeight:600,marginBottom:4}}>Passo B: Criar o arquivo de definições</p>
+            <p style={{fontSize:12,color:C.g600,lineHeight:1.6,marginBottom:6}}>Crie um arquivo chamado <code>swagger.json</code>. A opção <strong>"url": "/"</strong> é crucial para não dar erro de CORS no Vercel.</p>
+            <Code code={`{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Minha API Incrível",
+    "version": "1.0.0"
+  },
+  "servers": [ { "url": "/" } ],
+  "paths": {
+    "/minha-rota": {
+      "get": {
+        "summary": "Busca dados de teste",
+        "responses": { "200": { "description": "Sucesso!" } }
+      }
+    }
+  }
+}`} title="swagger.json" />
+          </div>
 
-          <Code code={`const swaggerUi = require('swagger-ui-express');
+          <div style={{background:C.purpleBg,borderRadius:10,padding:14,border:"1px solid #C4B5FD",marginBottom:16}}>
+            <p style={{fontSize:13,color:C.purple,fontWeight:600,marginBottom:4}}>Passo C: Injetar a rota na API e arrumar pro Vercel</p>
+            <p style={{fontSize:12,color:"#4C1D95",lineHeight:1.6,marginBottom:6}}>No seu <code>app.js</code>, configure a rota <code>/api-docs</code> usando a CDN para evitar o famoso erro de <code>Unexpected token '&lt;'</code> do Vercel:</p>
+            <Code code={`const express = require('express');
+const app = express();
+const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');
 
-// 1. Usar links de CDN (Cloudflare) para os arquivos estáticos
+// 1. Usar links de CDN (Cloudflare) para evitar erro no Vercel
 const CSS_URL = "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.1.0/swagger-ui.min.css";
 const JS_URL = "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.1.0/swagger-ui-bundle.min.js";
 const JS_URL2 = "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.1.0/swagger-ui-standalone-preset.min.js";
 
-// 2. Passar essas URLs nas configurações
-const swaggerOptions = {
-  customCssUrl: CSS_URL,
-  customJs: [JS_URL, JS_URL2],
-  customSiteTitle: "Minha API Documentada"
-};
+const swaggerOptions = { customCssUrl: CSS_URL, customJs: [JS_URL, JS_URL2] };
 
-// 3. Subir a rota!
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, swaggerOptions));`} title="Como arrumar o Swagger-UI no Vercel" />
-
-          <div style={{background:C.yellowBg,borderRadius:10,padding:14,border:"1px solid #FCD34D",marginBottom:16,marginTop:16}}>
-            <p style={{fontSize:13,color:"#92400E",fontWeight:700,marginBottom:4}}>⚠️ Dica da URL Dinâmica (CORS)</p>
-            <p style={{fontSize:12,color:"#92400E",lineHeight:1.6}}>No arquivo <code>swagger.json</code>, certifique-se de que a URL do servidor está configurada como <code>"url": "/"</code>. Se você deixar "http://localhost:3000", os testes feitos online pela nuvem darão Erro 500 (CORS).</p>
+// 2. Subir a rota!
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, swaggerOptions));`} title="app.js" />
           </div>
 
           <div style={{textAlign:"center",marginTop:14}}>
