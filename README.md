@@ -13,7 +13,7 @@
   <a href="https://petvida-db.vercel.app/api-docs" target="_blank">
     <img src="https://img.shields.io/badge/🚀_Testar_API_Online-18bc9c?style=for-the-badge" alt="Testar API Online" />
   </a>
-  <a href="https://htmlpreview.github.io/?https://github.com/AlexandreCalmon-devBa/petvida-db/blob/main/docs/tutorial_deploy.html" target="_blank">
+  <a href="https://petvida-db.vercel.app/docs/tutorial_deploy.html" target="_blank">
     <img src="https://img.shields.io/badge/📖_Tutorial_de_Deploy-3B82F6?style=for-the-badge" alt="Ver Tutorial de Hospedagem" />
   </a>
 </div>
@@ -54,7 +54,7 @@ O projeto foi construído em 9 tarefas incrementais, partindo da modelagem do DE
 
 ---
 
-## 🚀 Instalação e Execução
+## Instalação e Execução
 
 ### Pré-requisitos
 
@@ -115,9 +115,9 @@ Documentação Swagger Local: **http://localhost:3000/api-docs**
 
 ---
 
-## 📡 Endpoints da API
+##  Endpoints da API
 
-### 🐕 Animais — `/api/animais`
+###  Animais — `/api/animais`
 
 | Método | Rota | Descrição |
 |--------|------|-----------|
@@ -127,7 +127,7 @@ Documentação Swagger Local: **http://localhost:3000/api-docs**
 | `PUT` | `/api/animais/:id` | Atualiza dados do animal |
 | `DELETE` | `/api/animais/:id` | Remove animal (bloqueia se tiver consultas) |
 
-### 🩺 Veterinários — `/api/veterinarios`
+###  Veterinários — `/api/veterinarios`
 
 | Método | Rota | Descrição |
 |--------|------|-----------|
@@ -137,7 +137,7 @@ Documentação Swagger Local: **http://localhost:3000/api-docs**
 | `PUT` | `/api/veterinarios/:id` | Atualiza dados do veterinário |
 | `DELETE` | `/api/veterinarios/:id` | Remove veterinário |
 
-### 📅 Consultas — `/api/consultas`
+###  Consultas — `/api/consultas`
 
 | Método | Rota | Descrição |
 |--------|------|-----------|
@@ -147,7 +147,7 @@ Documentação Swagger Local: **http://localhost:3000/api-docs**
 | `PUT` | `/api/consultas/:id/concluir` | Conclui consulta via `sp_concluir_consulta` |
 | `DELETE` | `/api/consultas/:id` | Cancela consulta via `sp_cancelar_consulta` |
 
-### 💳 Pagamentos — `/api/pagamentos`
+### Pagamentos — `/api/pagamentos`
 
 | Método | Rota | Descrição |
 |--------|------|-----------|
@@ -157,7 +157,7 @@ Documentação Swagger Local: **http://localhost:3000/api-docs**
 | `PUT` | `/api/pagamentos/:id` | Atualiza pagamento |
 | `DELETE` | `/api/pagamentos/:id` | Remove pagamento |
 
-### 📊 Relatórios — `/api/relatorios`
+###  Relatórios — `/api/relatorios`
 
 | Método | Rota | Descrição |
 |--------|------|-----------|
@@ -166,7 +166,7 @@ Documentação Swagger Local: **http://localhost:3000/api-docs**
 
 ---
 
-## 🗄️ Estrutura do Banco de Dados
+##  Estrutura do Banco de Dados
 
 ### Tabelas
 
@@ -263,7 +263,7 @@ petvida-db/
 
 ---
 
-## 🧪 Testes
+##  Testes
 
 ```bash
 # Executar todos os testes
@@ -298,7 +298,7 @@ SELECT * FROM vw_inadimplentes;
 
 ---
 
-## 👤 Autor
+##  Autor
 
 **Alexandre Calmon**
 
