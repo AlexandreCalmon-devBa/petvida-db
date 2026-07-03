@@ -330,6 +330,24 @@ async function main() {
     args: ['--no-sandbox', '--disable-setuid-sandbox'],
   });
 
+  // ── Busca IDs reais do banco ──────────────────────────────────────────────
+  console.log('Buscando IDs do banco de dados...');
+  const db = require('../src/config/database');
+
+  const [[animais], [vets]] = await Promise.all([
+    db.query('SELECT id FROM animais LIMIT 1'),
+    db.query('SELECT id FROM veterinarios LIMIT 1'),
+  ]);
+
+  const animalId = animais[0]?.id;
+  const vetId    = vets[0]?.id;
+
+  if (!animalId || !vetId) {
+    console.error('❌  Banco sem dados! Execute database/seed.sql primeiro.');
+    process.exit(1);
+  }
+  console.log(`   → animal_id=${animalId}  veterinario_id=${vetId}\n`);
+
   // Variáveis compartilhadas entre endpoints
   let consultaId = null;
   const today = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
@@ -366,8 +384,8 @@ async function main() {
       description: 'Agenda nova consulta via CALL sp_agendar_consulta (valida animal, vet e conflito de horário).',
       filename:    '04_post_consultas.png',
       body: {
-        animal_id:      1,
-        veterinario_id: 1,
+        animal_id:      animalId,
+        veterinario_id: vetId,
         data_hora:      futureDate,
         valor:          180.00,
       },
@@ -376,7 +394,9 @@ async function main() {
         const data = result.responseBody;
         consultaId = data?.consulta_id ?? data?.id ?? null;
         if (consultaId) {
-          console.log(`     → Consulta criada com ID: ${consultaId}`);
+          console.log(`          → Consulta criada com ID: ${consultaId}`);
+        } else {
+          console.log(`          ⚠ Não foi possível extrair consulta_id da resposta`);
         }
       },
     },
