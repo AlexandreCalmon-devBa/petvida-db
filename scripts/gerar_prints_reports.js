@@ -2,7 +2,7 @@
  * scripts/gerar_prints_reports.js
  * ─────────────────────────────────────────────────────────────────────────────
  * Executa os 6 relatórios da Tarefa 7 contra o MySQL e gera prints estilo
- * MySQL Workbench / DBeaver, salvando em: docs/prints/
+ * MySQL Workbench / DBeaver, salvando em: docs/prints/tarefa7_reports/
  *
  * Pré-requisito: MySQL rodando com o banco petvida populado e .env configurado.
  * Uso:           node scripts/gerar_prints_reports.js
@@ -19,7 +19,7 @@ const path      = require('path');
 
 // ─── Diretório de saída ───────────────────────────────────────────────────────
 
-const PRINTS_DIR = path.join(__dirname, '..', 'docs', 'prints');
+const PRINTS_DIR = path.join(__dirname, '..', 'docs', 'prints', 'tarefa7_reports');
 if (!fs.existsSync(PRINTS_DIR)) fs.mkdirSync(PRINTS_DIR, { recursive: true });
 
 // ─── Definição dos 6 relatórios ──────────────────────────────────────────────
@@ -482,7 +482,7 @@ async function main() {
       });
 
       await screenshot(browser, html, report.filename);
-      console.log(`          ✅ Salvo: docs/prints/${report.filename}`);
+      console.log(`          ✅ Salvo: docs/prints/tarefa7_reports/${report.filename}`);
       results.push({ index: report.index, rows: rowCount, file: report.filename, ok: true });
 
     } catch (err) {
@@ -504,7 +504,7 @@ async function main() {
   results.forEach(r => {
     const icon = r.ok ? '✅' : '❌';
     const info = r.ok ? `${String(r.rows).padStart(2)} linha${r.rows !== 1 ? 's' : ''}` : 'ERRO';
-    console.log(`  ${icon}  [${r.index}/6]  ${info.padEnd(12)}  docs/prints/${r.file}`);
+    console.log(`  ${icon}  [${r.index}/6]  ${info.padEnd(12)}  docs/prints/tarefa7_reports/${r.file}`);
     if (!r.ok) console.log(`           └─ ${r.error}`);
   });
 
@@ -514,7 +514,7 @@ async function main() {
 
   console.log('\n' + '─'.repeat(56));
   console.log(`  Total: ${ok}/${total} — ${pts}`);
-  console.log('  Pasta: docs/prints/');
+  console.log('  Pasta: docs/prints/tarefa7_reports/');
   console.log('═'.repeat(56) + '\n');
 
   process.exit(ok === total ? 0 : 1);

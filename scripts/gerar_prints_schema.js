@@ -7,7 +7,7 @@ const puppeteer = require('puppeteer');
 const fs        = require('fs');
 const path      = require('path');
 
-const PRINTS_DIR = path.join(__dirname, '..', 'docs', 'prints');
+const PRINTS_DIR = path.join(__dirname, '..', 'docs', 'prints', 'tarefa1_schema');
 if (!fs.existsSync(PRINTS_DIR)) fs.mkdirSync(PRINTS_DIR, { recursive: true });
 
 const SCHEMA_SQL = fs.readFileSync(path.join(__dirname, '..', 'database', 'schema.sql'), 'utf-8');
@@ -158,7 +158,7 @@ ${topbar(t.idx,TOTAL,now)}
   await browser.close();
   await db.end();
   console.log('\n' + '─'.repeat(58));
-  console.log(`  Total: ${results.length}/${TOTAL} prints salvos em docs/prints/`);
+  console.log(`  Total: ${results.length}/${TOTAL} prints salvos em docs/prints/tarefa1_schema/`);
   console.log('═'.repeat(58) + '\n');
   process.exit(0);
 }

@@ -17,7 +17,7 @@ const puppeteer = require('puppeteer');
 const fs        = require('fs');
 const path      = require('path');
 
-const PRINTS_DIR = path.join(__dirname, '..', 'docs', 'prints');
+const PRINTS_DIR = path.join(__dirname, '..', 'docs', 'prints', 'tarefa6_security');
 if (!fs.existsSync(PRINTS_DIR)) fs.mkdirSync(PRINTS_DIR, { recursive: true });
 
 // ── Lê o conteúdo do security.sql ─────────────────────────────────────────
@@ -403,7 +403,7 @@ async function main() {
       });
 
       await screenshot(browser, html, filename);
-      console.log(`          ✅ Salvo: docs/prints/${filename}`);
+      console.log(`          ✅ Salvo: docs/prints/tarefa6_security/${filename}`);
       results.push({ index, label: `Perfil ${profile.user}`, file: filename, ok: true });
     } catch (err) {
       const duration = Date.now() - start;
@@ -418,7 +418,7 @@ async function main() {
         duration: Date.now() - start,
       });
       await screenshot(browser, html, filename);
-      console.log(`          ⚠  Salvo com aviso: docs/prints/${filename}`);
+      console.log(`          ⚠  Salvo com aviso: docs/prints/tarefa6_security/${filename}`);
       results.push({ index, label: `Perfil ${profile.user}`, file: filename, ok: false, warn: true });
     }
   }
@@ -439,7 +439,7 @@ async function main() {
     });
     await screenshot(browser, html, filename);
     console.log(`→ ok`);
-    console.log(`          ✅ Salvo: docs/prints/${filename}`);
+    console.log(`          ✅ Salvo: docs/prints/tarefa6_security/${filename}`);
     results.push({ index, label: 'security.sql', file: filename, ok: true });
   }
 
@@ -468,7 +468,7 @@ async function main() {
     const html = buildBackupHTML({ index, total: TOTAL, backupFiles });
     await screenshot(browser, html, filename);
     console.log(`→ ${backupFiles.length} arquivo${backupFiles.length !== 1 ? 's' : ''}`);
-    console.log(`          ✅ Salvo: docs/prints/${filename}`);
+    console.log(`          ✅ Salvo: docs/prints/tarefa6_security/${filename}`);
     results.push({ index, label: 'Backup', file: filename, ok: true });
   }
 
@@ -482,12 +482,12 @@ async function main() {
   console.log('═'.repeat(56));
   results.forEach(r => {
     const icon = r.ok ? '✅' : r.warn ? '⚠ ' : '❌';
-    console.log(`  ${icon}  [${r.index}/${TOTAL}]  ${r.label.padEnd(20)}  docs/prints/${r.file}`);
+    console.log(`  ${icon}  [${r.index}/${TOTAL}]  ${r.label.padEnd(20)}  docs/prints/tarefa6_security/${r.file}`);
   });
   const ok = results.filter(r => r.ok || r.warn).length;
   console.log('\n' + '─'.repeat(56));
   console.log(`  Total: ${ok}/${TOTAL} prints gerados`);
-  console.log('  Pasta: docs/prints/');
+  console.log('  Pasta: docs/prints/tarefa6_security/');
   console.log('═'.repeat(56) + '\n');
 
   process.exit(0);

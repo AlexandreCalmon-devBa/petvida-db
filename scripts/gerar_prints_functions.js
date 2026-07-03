@@ -23,7 +23,7 @@ const puppeteer = require('puppeteer');
 const fs        = require('fs');
 const path      = require('path');
 
-const PRINTS_DIR = path.join(__dirname, '..', 'docs', 'prints');
+const PRINTS_DIR = path.join(__dirname, '..', 'docs', 'prints', 'tarefa4_functions');
 if (!fs.existsSync(PRINTS_DIR)) fs.mkdirSync(PRINTS_DIR, { recursive: true });
 
 const FUNCTIONS_SQL = fs.readFileSync(
@@ -138,7 +138,7 @@ async function main() {
   // helper
   const run = async (sql, params=[]) => { const [r] = await db.query(sql, params); return r; };
   const log = (idx, label, rows) => {
-    console.log(`          ✅ Salvo: docs/prints/f0${idx}_fn_${label}.png (${rows} linhas)`);
+    console.log(`          ✅ Salvo: docs/prints/tarefa4_functions/f0${idx}_fn_${label}.png (${rows} linhas)`);
   };
 
   // ══════════════════════════════════════════════════════════════════════════
@@ -156,7 +156,7 @@ ${topbar(idx,TOTAL,now)}
 <div class="footer">PetVida — Projeto Acadêmico de Banco de Dados · ${now}</div>
 </body></html>`;
     await shot(browser, html, fn);
-    console.log(`→ ok`); console.log(`          ✅ Salvo: docs/prints/${fn}`);
+    console.log(`→ ok`); console.log(`          ✅ Salvo: docs/prints/tarefa4_functions/${fn}`);
     results.push({ idx, ok:true, fn });
   }
 
@@ -398,11 +398,11 @@ ${topbar(idx,TOTAL,now)}
   console.log('\n' + '═'.repeat(58));
   console.log('   📸  Resumo — Tarefa 4');
   console.log('═'.repeat(58));
-  results.forEach(r => console.log(`  ${r.ok?'✅':'❌'}  [${r.idx}/${TOTAL}]  docs/prints/${r.fn}`));
+  results.forEach(r => console.log(`  ${r.ok?'✅':'❌'}  [${r.idx}/${TOTAL}]  docs/prints/tarefa4_functions/${r.fn}`));
   const ok = results.filter(r=>r.ok).length;
   console.log('\n' + '─'.repeat(58));
   console.log(`  Total: ${ok}/${TOTAL} — ${ok===TOTAL?'10/10 pts potenciais 🎉':`${ok}/${TOTAL} ok`}`);
-  console.log('  Pasta: docs/prints/');
+  console.log('  Pasta: docs/prints/tarefa4_functions/');
   console.log('═'.repeat(58) + '\n');
   process.exit(0);
 }

@@ -2,7 +2,7 @@
  * scripts/gerar_prints.js
  * ─────────────────────────────────────────────────────────────────────────────
  * Gera automaticamente prints estilo Thunder Client dos 8 endpoints da Tarefa 8.
- * Os prints são salvos em: docs/prints/
+ * Os prints são salvos em: docs/prints/tarefa8_api/
  *
  * Pré-requisito: MySQL rodando com o banco petvida populado e .env configurado.
  * Uso:           node scripts/gerar_prints.js
@@ -21,7 +21,7 @@ const path       = require('path');
 
 // ─── Diretório de saída ───────────────────────────────────────────────────────
 
-const PRINTS_DIR = path.join(__dirname, '..', 'docs', 'prints');
+const PRINTS_DIR = path.join(__dirname, '..', 'docs', 'prints', 'tarefa8_api');
 if (!fs.existsSync(PRINTS_DIR)) fs.mkdirSync(PRINTS_DIR, { recursive: true });
 
 // ─── App Express (sem .listen) ────────────────────────────────────────────────
@@ -463,7 +463,7 @@ async function main() {
 
       const outPath = await screenshot(browser, html, ep.filename);
       results.push({ index: ep.index, url, status: result.statusCode, file: ep.filename, ok: true });
-      console.log(`          ✅ Salvo: docs/prints/${ep.filename}`);
+      console.log(`          ✅ Salvo: docs/prints/tarefa8_api/${ep.filename}`);
 
     } catch (err) {
       console.log(`→ ERRO`);
@@ -482,7 +482,7 @@ async function main() {
   results.forEach(r => {
     const icon  = r.ok ? '✅' : '❌';
     const badge = r.ok ? `HTTP ${r.status}` : r.status;
-    console.log(`  ${icon}  [${r.index}/8] ${badge.toString().padEnd(10)} docs/prints/${r.file}`);
+    console.log(`  ${icon}  [${r.index}/8] ${badge.toString().padEnd(10)} docs/prints/tarefa8_api/${r.file}`);
   });
 
   const ok      = results.filter(r => r.ok).length;
@@ -491,7 +491,7 @@ async function main() {
 
   console.log('\n' + '─'.repeat(52));
   console.log(`  Total: ${ok}/${total} prints gerados — ${ptsText}`);
-  console.log('  Pasta: docs/prints/');
+  console.log('  Pasta: docs/prints/tarefa8_api/');
   console.log('═'.repeat(52) + '\n');
 
   // Fecha conexões do MySQL para o processo encerrar limpo
