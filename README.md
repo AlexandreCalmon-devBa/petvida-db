@@ -13,6 +13,9 @@
   <a href="https://petvida-db.vercel.app/api-docs" target="_blank">
     <img src="https://img.shields.io/badge/🚀_Testar_API_Online-18bc9c?style=for-the-badge" alt="Testar API Online" />
   </a>
+  <a href="https://htmlpreview.github.io/?https://github.com/AlexandreCalmon-devBa/petvida-db/blob/main/docs/tutorial_deploy.html" target="_blank">
+    <img src="https://img.shields.io/badge/📖_Tutorial_de_Deploy-3B82F6?style=for-the-badge" alt="Ver Tutorial de Hospedagem" />
+  </a>
 </div>
 
 </div>
@@ -101,11 +104,14 @@ npm install
 npm run dev
 ```
 
-A API estará disponível em: **http://localhost:3000**
+A API local estará disponível em: **http://localhost:3000**
+Documentação Swagger Local: **http://localhost:3000/api-docs**
 
-Documentação Swagger: **http://localhost:3000/api-docs**
+🌐 **Ambiente de Produção (Nuvem):**
+- **Documentação da API:** [https://petvida-db.vercel.app/api-docs](https://petvida-db.vercel.app/api-docs)
+- **Tutorial Interativo de Deploy:** [Acessar Tutorial](https://htmlpreview.github.io/?https://github.com/AlexandreCalmon-devBa/petvida-db/blob/main/docs/tutorial_deploy.html)
 
-> **Windows**: use o `iniciar_servidor.bat` para iniciar com duplo clique.
+> **Windows**: use o `iniciar_servidor.bat` para iniciar com duplo clique localmente.
 
 ---
 
