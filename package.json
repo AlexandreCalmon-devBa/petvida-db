@@ -15,7 +15,10 @@
     "prints:reports": "node scripts/gerar_prints_reports.js",
     "prints:security": "node scripts/gerar_prints_security.js",
     "prints:triggers": "node scripts/gerar_prints_triggers.js",
-    "prints:functions": "node scripts/gerar_prints_functions.js"
+    "prints:functions": "node scripts/gerar_prints_functions.js",
+    "prints:procedures": "node scripts/gerar_prints_procedures.js",
+    "prints:views": "node scripts/gerar_prints_views.js",
+    "prints:schema": "node scripts/gerar_prints_schema.js"
   },
   "repository": {
     "type": "git",
