@@ -20,7 +20,7 @@
 <script type="text/babel">
 const {useState,useEffect}=React;
 const C={dark:"#2E4059",darkH:"#3A5575",accent:"#3B82F6",green:"#059669",greenBg:"#ECFDF5",red:"#DC2626",redBg:"#FEF2F2",yellow:"#D97706",yellowBg:"#FEF3C7",white:"#FFF",g100:"#F8FAFC",g200:"#E2E8F0",g400:"#94A3B8",g600:"#475569",g800:"#1E293B",purple:"#7C3AED",purpleBg:"#F5F3FF",cyan:"#0891B2",orange:"#EA580C",codeBg:"#0D1117",codeText:"#C9D1D9"};
-const TABS=["🚀 Visão Geral","⚙️ 1. API (Node)","🐬 2. Banco (Aiven)","☁️ 3. Nuvem (Vercel)","✅ Conclusão"];
+const TABS=["🚀 Visão Geral","⚙️ 1. API (Node)","🐬 2. Banco (Aiven)","☁️ 3. Nuvem (Vercel)","📝 4. Bônus: Swagger","✅ Conclusão"];
 
 function App(){
   const [tab,setTab]=useState(0);
@@ -190,23 +190,62 @@ function App(){
           
           <div style={{textAlign:"center"}}>
             <p style={{fontSize:12,color:C.g600,marginBottom:14}}>Depois de adicionar e salvar as 5 variáveis, clique no botão azul gigante <strong>Deploy</strong> e aguarde a mágica! 🪄</p>
-            <button onClick={()=>setTab(4)} style={btn("primary")}>Ver Conclusão ✅ →</button>
+            <button onClick={()=>setTab(4)} style={btn("primary")}>Ver Bônus do Swagger 📝 →</button>
           </div>
         </div>)}
 
-        {/* ===== TAB 4: SUMMARY ===== */}
+        {/* ===== TAB 4: SWAGGER BONUS ===== */}
         {tab===4&&(<div>
+          <h2 style={{fontSize:19,color:C.g800,marginBottom:14}}>📝 Bônus: Swagger Perfeito no Vercel</h2>
+          
+          <div style={{background:C.redBg,borderRadius:10,padding:14,border:"1px solid #FCA5A5",marginBottom:16}}>
+            <p style={{fontSize:13,color:C.red,fontWeight:600,marginBottom:4}}>⚠️ Erro "Unexpected token '<'" no Vercel</p>
+            <p style={{fontSize:12,color:"#991B1B",lineHeight:1.6}}>Como o Vercel apaga arquivos estáticos invisíveis na nuvem, o pacote <code>swagger-ui-express</code> quebra ao tentar carregar o CSS e JS local, retornando uma página 404 de erro.</p>
+          </div>
+
+          <p style={{fontSize:12,color:C.g600,marginBottom:10}}>A solução definitiva é configurar o Swagger para carregar os recursos através de uma CDN (Cloudflare). Copie o código abaixo e cole no seu arquivo de rotas/app:</p>
+
+          <Code code={`const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger.json');
+
+// 1. Usar links de CDN (Cloudflare) para os arquivos estáticos
+const CSS_URL = "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.1.0/swagger-ui.min.css";
+const JS_URL = "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.1.0/swagger-ui-bundle.min.js";
+const JS_URL2 = "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.1.0/swagger-ui-standalone-preset.min.js";
+
+// 2. Passar essas URLs nas configurações
+const swaggerOptions = {
+  customCssUrl: CSS_URL,
+  customJs: [JS_URL, JS_URL2],
+  customSiteTitle: "Minha API Documentada"
+};
+
+// 3. Subir a rota!
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, swaggerOptions));`} title="Como arrumar o Swagger-UI no Vercel" />
+
+          <div style={{background:C.yellowBg,borderRadius:10,padding:14,border:"1px solid #FCD34D",marginBottom:16,marginTop:16}}>
+            <p style={{fontSize:13,color:"#92400E",fontWeight:700,marginBottom:4}}>⚠️ Dica da URL Dinâmica (CORS)</p>
+            <p style={{fontSize:12,color:"#92400E",lineHeight:1.6}}>No arquivo <code>swagger.json</code>, certifique-se de que a URL do servidor está configurada como <code>"url": "/"</code>. Se você deixar "http://localhost:3000", os testes feitos online pela nuvem darão Erro 500 (CORS).</p>
+          </div>
+
+          <div style={{textAlign:"center",marginTop:14}}>
+            <button onClick={()=>setTab(5)} style={btn("green")}>Concluir Tutorial ✅ →</button>
+          </div>
+        </div>)}
+
+        {/* ===== TAB 5: SUMMARY ===== */}
+        {tab===5&&(<div>
           <div style={{textAlign:"center",padding:24,background:C.greenBg,borderRadius:12,animation:"pop 0.3s",marginBottom:20}}>
             <p style={{fontSize:50,marginBottom:8}}>🎉</p>
             <h2 style={{fontSize:22,fontWeight:700,color:C.green,marginBottom:10}}>Tudo Online!</h2>
-            <p style={{fontSize:13,color:"#065F46"}}>Seu banco de dados e sua API estão rodando perfeitamente conectados na nuvem.</p>
+            <p style={{fontSize:13,color:"#065F46"}}>Seu banco de dados, API e Documentação Swagger estão rodando perfeitamente conectados na nuvem.</p>
           </div>
 
           <h3 style={{fontSize:16,color:C.g800,marginBottom:10}}>Checklist Final:</h3>
           <div style={{background:C.white,border:`1px solid ${C.g200}`,borderRadius:12,padding:16}}>
              {[
-               "O Vercel vai te dar um link público (ex: seu-projeto.vercel.app)",
-               "Clique nele e adicione /api-docs ao final da URL no navegador.",
+               "Acesse o link gerado pelo Vercel (ex: meu-projeto.vercel.app)",
+               "Adicione /api-docs ao final da URL para abrir o Swagger.",
                "Teste um endpoint (ex: GET /api/veterinarios) clicando no botão Execute.",
                "Veja os dados reais retornando do Aiven! A mágica aconteceu.",
                "Mande o link no grupo do WhatsApp para os amigos testarem."
