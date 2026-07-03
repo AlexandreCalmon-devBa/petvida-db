@@ -3,6 +3,10 @@ const router = express.Router();
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');
 
+const CSS_URL = "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.1.0/swagger-ui.min.css";
+const JS_URL = "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.1.0/swagger-ui-bundle.min.js";
+const JS_URL2 = "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.1.0/swagger-ui-standalone-preset.min.js";
+
 // Opções de personalização visual do Swagger
 const swaggerOptions = {
   customCss: `
@@ -10,6 +14,8 @@ const swaggerOptions = {
     .swagger-ui .info .title { color: #2c3e50; }
     .swagger-ui .opblock.opblock-get .opblock-summary-method { background: #18bc9c; }
   `,
+  customCssUrl: CSS_URL,
+  customJs: [JS_URL, JS_URL2],
   customSiteTitle: "API Docs - Clínica PetVida"
 };
 
