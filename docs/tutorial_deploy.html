@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tutorial: Deploy de Node.js + MySQL na Nuvem</title>
+    <style>
+        :root {
+            --primary: #18bc9c;
+            --secondary: #2c3e50;
+            --bg-color: #f8f9fa;
+            --text-color: #333;
+            --code-bg: #2d2d2d;
+            --border: #e9ecef;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        header {
+            text-align: center;
+            padding-bottom: 30px;
+            border-bottom: 2px solid var(--border);
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            color: var(--secondary);
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            color: var(--primary);
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 10px;
+            margin-top: 40px;
+        }
+
+        h3 {
+            color: var(--secondary);
+            margin-top: 30px;
+        }
+
+        p {
+            font-size: 1.1em;
+            margin-bottom: 20px;
+        }
+
+        .step-box {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-left: 5px solid var(--primary);
+            padding: 20px;
+            border-radius: 4px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+
+        .step-box ol {
+            margin: 0;
+            padding-left: 20px;
+        }
+
+        .step-box li {
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        code {
+            background-color: #f1f3f5;
+            color: #d63384;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9em;
+        }
+
+        pre {
+            background-color: var(--code-bg);
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.95em;
+        }
+
+        .alert {
+            background-color: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 4px;
+            color: #856404;
+        }
+
+        .highlight {
+            font-weight: bold;
+            color: var(--secondary);
+        }
+
+        .badge {
+            background: var(--primary);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>🚀 Deploy Master: Node.js + MySQL na Nuvem</h1>
+        <p>Aprenda a colocar sua API no <strong>Vercel</strong> e seu banco de dados no <strong>Aiven</strong> de forma 100% gratuita.</p>
+    </header>
+
+    <div class="alert">
+        <strong>💡 Por que separar?</strong> O Vercel é excelente para rodar código (Node.js/React), mas não hospeda bancos de dados relacionais como o MySQL. Por isso, usamos o Aiven para o banco e o Vercel para a API.
+    </div>
+
+    <h2><span class="badge">Passo 1</span> Preparando a API (Node.js)</h2>
+    <div class="step-box">
+        <p>Antes de subir, seu projeto precisa estar pronto para o Vercel.</p>
+        <ol>
+            <li>Na raiz do seu projeto, crie um arquivo chamado <code>vercel.json</code>:
+<pre>{
+  "version": 2,
+  "builds": [
+    { "src": "src/server.js", "use": "@vercel/node" }
+  ],
+  "routes": [
+    { "src": "/(.*)", "dest": "/src/server.js" }
+  ]
+}</pre>
+            </li>
+            <li>No seu arquivo principal (ex: <code>server.js</code>), <strong>não execute o app.listen()</strong> no ambiente do Vercel. Envolva-o em um IF e sempre exporte o <code>app</code> no final:
+<pre>if (process.env.NODE_ENV !== 'production' && !process.env.VERCEL) {
+  app.listen(3000, () => console.log('Servidor local rodando!'));
+}
+module.exports = app;</pre>
+            </li>
+            <li>No seu arquivo de conexão com o banco (ex: <code>database.js</code>), certifique-se de forçar o SSL para conexões remotas:
+<pre>const pool = mysql.createPool({
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+  ssl: process.env.VERCEL ? { rejectUnauthorized: false } : undefined
+});</pre>
+            </li>
+        </ol>
+    </div>
+
+    <h2><span class="badge">Passo 2</span> Criando o MySQL Grátis no Aiven</h2>
+    <div class="step-box">
+        <p>O Aiven oferece um banco MySQL gratuito e super rápido.</p>
+        <ol>
+            <li>Acesse <a href="https://aiven.io/" target="_blank">Aiven.io</a> e crie uma conta gratuita.</li>
+            <li>No painel (Console), clique no botão azul <strong>Create Service</strong>.</li>
+            <li>Selecione <strong>MySQL</strong> como serviço.</li>
+            <li>Na seção <em>Service Plan</em>, desça até o final e escolha a opção <strong>Free / Hobbyist</strong>.</li>
+            <li>Selecione uma região próxima (ex: AWS South America / São Paulo) e clique em <strong>Create</strong>.</li>
+            <li>Aguarde cerca de 2 minutos até o status ficar <span style="color: green; font-weight: bold;">✔ Running</span>.</li>
+            <li>Na aba <strong>Overview</strong>, procure a seção <strong>Connection Information</strong>. Guarde bem o <code>Host</code>, <code>Port</code>, <code>User</code> e <code>Password</code> (clique no olho para ver a senha).</li>
+        </ol>
+    </div>
+
+    <h2><span class="badge">Passo 3</span> Subindo as Tabelas pro Banco</h2>
+    <div class="step-box">
+        <p>Você precisa conectar sua máquina local no Aiven para rodar o <code>CREATE TABLE</code> e os <code>INSERTs</code>.</p>
+        <ol>
+            <li>Você pode usar ferramentas visuais como o <strong>DBeaver</strong> ou <strong>MySQL Workbench</strong>.</li>
+            <li>Crie uma nova conexão e cole o Host, Usuário e Senha que pegou no Aiven.</li>
+            <li><strong>Atenção:</strong> Nas configurações da ferramenta, exija SSL (Required) para a conexão.</li>
+            <li>Conectado, abra os seus scripts SQL (ex: <code>schema.sql</code>) e mande executar tudo de uma vez.</li>
+        </ol>
+    </div>
+
+    <h2><span class="badge">Passo 4</span> Deploy da API no Vercel</h2>
+    <div class="step-box">
+        <p>Com o código no GitHub e o banco online, é hora de juntar os dois.</p>
+        <ol>
+            <li>Faça o push de todo o seu código para o <strong>GitHub</strong>.</li>
+            <li>Acesse <a href="https://vercel.com" target="_blank">Vercel.com</a> e faça login com seu GitHub.</li>
+            <li>Clique em <strong>Add New... -> Project</strong>.</li>
+            <li>Encontre seu repositório na lista e clique em <strong>Import</strong>.</li>
+            <li>Na tela "Configure Project", abra a aba oculta chamada <strong>Environment Variables</strong> (Variáveis de Ambiente).</li>
+            <li>Adicione os dados do seu banco do Aiven um a um:
+                <ul>
+                    <li><code>DB_HOST</code> = (ex: mysql-xyz-suaorg.aivencloud.com)</li>
+                    <li><code>DB_PORT</code> = (geralmente porta diferente da 3306)</li>
+                    <li><code>DB_USER</code> = avnadmin</li>
+                    <li><code>DB_PASSWORD</code> = (Sua senha secreta)</li>
+                    <li><code>DB_NAME</code> = defaultdb (ou petvida, se tiver criado)</li>
+                </ul>
+            </li>
+            <li>Clique no botão azul <strong>Deploy</strong>.</li>
+        </ol>
+    </div>
+
+    <div class="alert" style="background-color: #d1ecf1; border-color: #bee5eb; color: #0c5460;">
+        🎉 <strong>Tudo pronto!</strong> Em menos de um minuto o Vercel vai gerar uma URL pública e sua API estará conectada na nuvem conversando com o Aiven de forma segura!
+    </div>
+
+</div>
+
+</body>
+</html>

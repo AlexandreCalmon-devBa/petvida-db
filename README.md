@@ -9,6 +9,12 @@
 
 > **Projeto acadêmico** de banco de dados relacional completo, com API REST, procedures, triggers e views — desenvolvido para gerenciamento de uma clínica veterinária fictícia.
 
+<div align="center">
+  <a href="https://petvida-db.vercel.app/api-docs" target="_blank">
+    <img src="https://img.shields.io/badge/🚀_Testar_API_Online-18bc9c?style=for-the-badge" alt="Testar API Online" />
+  </a>
+</div>
+
 </div>
 
 ---
