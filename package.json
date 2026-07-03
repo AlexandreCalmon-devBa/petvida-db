@@ -13,7 +13,9 @@
     "dev": "node src/server.js",
     "prints": "node scripts/gerar_prints.js",
     "prints:reports": "node scripts/gerar_prints_reports.js",
-    "prints:security": "node scripts/gerar_prints_security.js"
+    "prints:security": "node scripts/gerar_prints_security.js",
+    "prints:triggers": "node scripts/gerar_prints_triggers.js",
+    "prints:functions": "node scripts/gerar_prints_functions.js"
   },
   "repository": {
     "type": "git",
