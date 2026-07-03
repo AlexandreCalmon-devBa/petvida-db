@@ -20,6 +20,9 @@ coverage/
 dist/
 build/
 
+# Prints gerados automaticamente (regeneráveis com npm run prints)
+docs/prints/
+
 # Editor/OS
 .vscode/
 .idea/

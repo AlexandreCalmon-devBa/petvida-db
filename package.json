@@ -10,7 +10,8 @@
     "test": "jest",
     "test:report": "jest --reporters=default --reporters=jest-html-reporter",
     "start": "node src/server.js",
-    "dev": "node src/server.js"
+    "dev": "node src/server.js",
+    "prints": "node scripts/gerar_prints.js"
   },
   "repository": {
     "type": "git",
@@ -34,6 +35,7 @@
   "devDependencies": {
     "jest": "^30.4.2",
     "jest-html-reporter": "^4.4.0",
+    "puppeteer": "^25.3.0",
     "supertest": "^7.2.2"
   }
 }
