@@ -12,8 +12,8 @@
   },
   "servers": [
     {
-      "url": "http://localhost:3000",
-      "description": "Servidor Local de Desenvolvimento"
+      "url": "/",
+      "description": "Servidor Atual (Local ou Nuvem)"
     }
   ],
   "tags": [
