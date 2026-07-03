@@ -1,64 +1,66 @@
-erDiagram
-    TUTORES {
-        int id PK
-        string nome
-        string cpf UK
-        string email
-        string telefone
-    }
-    
-    ESPECIES {
-        int id PK
-        string nome UK
-    }
+classDiagram
+  direction LR
 
-    VETERINARIOS {
-        int id PK
-        string nome
-        string crmv UK
-        string especialidade
-        string telefone
-    }
+  class TUTORES {
+      +int id [PK]
+      +string nome
+      +string cpf [UK]
+      +string email
+      +string telefone
+  }
+  
+  class ESPECIES {
+      +int id [PK]
+      +string nome [UK]
+  }
 
-    ANIMAIS {
-        int id PK
-        string nome
-        int especie_id FK
-        string raca
-        date data_nascimento
-        int tutor_id FK
-    }
+  class VETERINARIOS {
+      +int id [PK]
+      +string nome
+      +string crmv [UK]
+      +string especialidade
+      +string telefone
+  }
 
-    CONSULTAS {
-        int id PK
-        int animal_id FK
-        int veterinario_id FK
-        datetime data_hora
-        string diagnostico
-        decimal valor
-        string status
-    }
+  class ANIMAIS {
+      +int id [PK]
+      +string nome
+      +int especie_id [FK]
+      +string raca
+      +date data_nascimento
+      +int tutor_id [FK]
+  }
 
-    PAGAMENTOS {
-        int id PK
-        int consulta_id FK
-        decimal valor_pago
-        string forma_pagamento
-        datetime data_pagamento
-        string status
-    }
-    
-    LOG_AUDITORIA {
-        int id PK
-        string tabela_afetada
-        string acao
-        int registro_id
-        string detalhes
-        timestamp data_hora
-    }
+  class CONSULTAS {
+      +int id [PK]
+      +int animal_id [FK]
+      +int veterinario_id [FK]
+      +datetime data_hora
+      +string diagnostico
+      +decimal valor
+      +string status
+  }
 
-    TUTORES ||--o{ ANIMAIS : "possui"
-    ESPECIES ||--o{ ANIMAIS : "classifica"
-    ANIMAIS ||--o{ CONSULTAS : "recebe"
-    VETERINARIOS ||--o{ CONSULTAS : "realiza"
-    CONSULTAS ||--o| PAGAMENTOS : "gera"
+  class PAGAMENTOS {
+      +int id [PK]
+      +int consulta_id [FK]
+      +decimal valor_pago
+      +string forma_pagamento
+      +datetime data_pagamento
+      +string status
+  }
+  
+  class LOG_AUDITORIA {
+      +int id [PK]
+      +string tabela_afetada
+      +string acao
+      +int registro_id
+      +string detalhes
+      +timestamp data_hora
+  }
+
+  TUTORES "1" --> "N" ANIMAIS : possui
+  ESPECIES "1" --> "N" ANIMAIS : classifica
+  ANIMAIS "1" --> "N" CONSULTAS : recebe
+  VETERINARIOS "1" --> "N" CONSULTAS : realiza
+  CONSULTAS "1" --> "1" PAGAMENTOS : gera
