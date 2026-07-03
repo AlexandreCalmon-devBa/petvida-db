@@ -20,7 +20,7 @@
 <script type="text/babel">
 const {useState,useEffect}=React;
 const C={dark:"#2E4059",darkH:"#3A5575",accent:"#3B82F6",green:"#059669",greenBg:"#ECFDF5",red:"#DC2626",redBg:"#FEF2F2",yellow:"#D97706",yellowBg:"#FEF3C7",white:"#FFF",g100:"#F8FAFC",g200:"#E2E8F0",g400:"#94A3B8",g600:"#475569",g800:"#1E293B",purple:"#7C3AED",purpleBg:"#F5F3FF",cyan:"#0891B2",orange:"#EA580C",codeBg:"#0D1117",codeText:"#C9D1D9"};
-const TABS=["🚀 Visão Geral","⚙️ 1. API (Node)","🐬 2. Banco (Aiven)","☁️ 3. Nuvem (Vercel)","📝 4. Swagger (API Docs)","✅ Conclusão"];
+const TABS=["🚀 Visão Geral","⚙️ 1. API (Node)","🐬 2. Banco (Aiven)","☁️ 3. Nuvem (Vercel)","📝 4. Swagger (Código)","✅ Conclusão"];
 
 function App(){
   const [tab,setTab]=useState(0);
@@ -30,7 +30,7 @@ function App(){
   const Code=({code,title})=>(
     <div style={{background:C.codeBg,borderRadius:8,marginBottom:8,overflow:"hidden",border:"1px solid #30363D"}}>
       {title&&<div style={{padding:"5px 12px",borderBottom:"1px solid #30363D",background:"#161B22"}}><span style={{fontSize:10,color:"#8B949E",fontFamily:"monospace"}}>{title}</span></div>}
-      <pre style={{padding:"10px 14px",fontSize:12,fontFamily:"'Cascadia Code',Consolas,monospace",lineHeight:1.6,color:C.codeText,margin:0,whiteSpace:"pre-wrap",overflow:"auto"}}>{code}</pre>
+      <pre style={{padding:"10px 14px",fontSize:12,fontFamily:"'Cascadia Code',Consolas,monospace",lineHeight:1.6,color:C.codeText,margin:0,whiteSpace:"pre-wrap",overflow:"auto",maxHeight:"400px"}}>{code}</pre>
     </div>
   );
 
@@ -80,7 +80,7 @@ function App(){
           </div>
 
           <div style={{background:C.yellowBg,border:`1px solid #FCD34D`,borderRadius:10,padding:14,marginBottom:14}}>
-            <p style={{fontSize:13,color:"#92400E",lineHeight:1.6}}><strong>💡 Resumo:</strong> Quando um usuário acessa seu link do Vercel, o Vercel "acorda" a sua API em Node. A API então se conecta ao Aiven remotamente, faz o `SELECT`, pega os dados e manda de volta para o usuário em formato JSON.</p>
+            <p style={{fontSize:13,color:"#92400E",lineHeight:1.6}}><strong>💡 Resumo:</strong> Quando um usuário acessa seu link do Vercel, o Vercel "acorda" a sua API em Node. A API então se conecta ao Aiven remotamente, faz o \`SELECT\`, pega os dados e manda de volta para o usuário em formato JSON.</p>
           </div>
 
           <div style={{textAlign:"center",marginTop:8}}><button onClick={()=>setTab(1)} style={btn("accent")}>Passo 1: Preparar a API ⚙️ →</button></div>
@@ -196,9 +196,9 @@ function App(){
 
         {/* ===== TAB 4: SWAGGER BONUS ===== */}
         {tab===4&&(<div>
-          <h2 style={{fontSize:19,color:C.g800,marginBottom:14}}>📝 4. Swagger: Como criar a página de Documentação API</h2>
+          <h2 style={{fontSize:19,color:C.g800,marginBottom:14}}>📝 4. Swagger: O Código Completo do PetVida</h2>
           
-          <p style={{fontSize:12,color:C.g600,marginBottom:10}}>Você pode criar uma interface de testes visual incrível (igual do projeto PetVida) para suas próprias APIs em 3 passos:</p>
+          <p style={{fontSize:12,color:C.g600,marginBottom:10}}>Quer disponibilizar uma documentação profissional (igual à do PetVida) para todos testarem a API online? Você pode simplesmente copiar e colar meus códigos e colocar no seu projeto!</p>
 
           <div style={{background:C.greenBg,borderRadius:10,padding:14,border:"1px solid #6EE7B7",marginBottom:16}}>
             <p style={{fontSize:13,color:C.green,fontWeight:600,marginBottom:4}}>Passo A: Instalar a biblioteca</p>
@@ -207,35 +207,68 @@ function App(){
           </div>
 
           <div style={{background:C.g100,borderRadius:10,padding:14,border:`1px solid ${C.g200}`,marginBottom:16}}>
-            <p style={{fontSize:13,color:C.g800,fontWeight:600,marginBottom:4}}>Passo B: Criar o arquivo de definições</p>
-            <p style={{fontSize:12,color:C.g600,lineHeight:1.6,marginBottom:6}}>Crie um arquivo chamado <code>swagger.json</code>. A opção <strong>"url": "/"</strong> é crucial para não dar erro de CORS no Vercel.</p>
+            <p style={{fontSize:13,color:C.g800,fontWeight:600,marginBottom:4}}>Passo B: O arquivo gigante (swagger.json)</p>
+            <p style={{fontSize:12,color:C.g600,lineHeight:1.6,marginBottom:6}}>Crie o arquivo <code>src/swagger.json</code> e cole todo o código do PetVida lá dentro. Lembre-se que o <code>"url": "/"</code> já está embutido nele para não dar erro de CORS no Vercel!</p>
             <Code code={`{
   "openapi": "3.0.0",
   "info": {
-    "title": "Minha API Incrível",
-    "version": "1.0.0"
+    "title": "PetVida API",
+    "description": "API de gerenciamento da Clínica Veterinária PetVida.\\n\\n### 🚀 Como usar esta documentação:\\n1. Clique em qualquer endpoint abaixo (ex: \\\`GET /api/veterinarios\\\`) para expandir.\\n2. Clique no botão **Try it out** (Testar) no lado direito.\\n3. Preencha os campos necessários (se houver).\\n4. Clique no botão grande azul **Execute**.\\n5. Role a tela para baixo para ver a **Server response** (Resposta do Servidor) que mostrará os dados do banco de dados!",
+    "version": "1.0.0",
+    "contact": {
+      "name": "Desenvolvedor Backend (Alexandre)",
+      "url": "https://github.com/AlexandreCalmon-devBa"
+    }
   },
-  "servers": [ { "url": "/" } ],
+  "servers": [ { "url": "/", "description": "Servidor Atual" } ],
+  "tags": [
+    { "name": "Veterinários", "description": "Gestão de profissionais de saúde" },
+    { "name": "Animais", "description": "Gestão de pacientes e seus tutores" },
+    { "name": "Consultas", "description": "Agendamentos, históricos e status" },
+    { "name": "Pagamentos", "description": "Financeiro e faturamento de consultas" },
+    { "name": "Relatórios", "description": "Dashboards gerenciais e inadimplência" }
+  ],
+  "components": {
+    "schemas": {
+      "Veterinario": { "type": "object", "properties": { "id": { "type": "integer" }, "nome": { "type": "string" }, "crmv": { "type": "string" }, "especialidade": { "type": "string" }, "telefone": { "type": "string" } } },
+      "Animal": { "type": "object", "properties": { "id": { "type": "integer" }, "nome": { "type": "string" }, "especie_id": { "type": "integer" }, "raca": { "type": "string" }, "data_nascimento": { "type": "string" }, "tutor_id": { "type": "integer" } } },
+      "Consulta": { "type": "object", "properties": { "id": { "type": "integer" }, "animal_id": { "type": "integer" }, "veterinario_id": { "type": "integer" }, "data_hora": { "type": "string" }, "diagnostico": { "type": "string" }, "valor": { "type": "number" }, "status": { "type": "string" } } }
+    }
+  },
   "paths": {
-    "/minha-rota": {
-      "get": {
-        "summary": "Busca dados de teste",
-        "responses": { "200": { "description": "Sucesso!" } }
-      }
+    "/api/veterinarios": {
+      "get": { "tags": ["Veterinários"], "summary": "Listar todos", "responses": { "200": { "description": "Sucesso" } } },
+      "post": { "tags": ["Veterinários"], "summary": "Criar novo", "responses": { "201": { "description": "Criado com sucesso" } } }
+    },
+    "/api/animais": {
+      "get": { "tags": ["Animais"], "summary": "Listar todos detalhados", "responses": { "200": { "description": "Sucesso" } } }
+    },
+    "/api/consultas": {
+      "get": { "tags": ["Consultas"], "summary": "Listar todas", "responses": { "200": { "description": "Sucesso" } } },
+      "post": { "tags": ["Consultas"], "summary": "Agendar nova (via procedure)", "responses": { "201": { "description": "Agendada com sucesso" } } }
+    },
+    "/api/pagamentos": {
+      "get": { "tags": ["Pagamentos"], "summary": "Listar todos", "responses": { "200": { "description": "Sucesso" } } }
+    },
+    "/api/relatorios/dashboard": {
+      "get": { "tags": ["Relatórios"], "summary": "Dashboard Financeiro", "responses": { "200": { "description": "Dados do dashboard" } } }
     }
   }
-}`} title="swagger.json" />
+}`} title="src/swagger.json" />
+            <p style={{fontSize:11,color:C.g400,fontStyle:"italic"}}>* O código JSON acima foi resumido visualmente por ser muito longo, cole o código real do seu projeto!</p>
           </div>
 
           <div style={{background:C.purpleBg,borderRadius:10,padding:14,border:"1px solid #C4B5FD",marginBottom:16}}>
             <p style={{fontSize:13,color:C.purple,fontWeight:600,marginBottom:4}}>Passo C: Injetar a rota na API e arrumar pro Vercel</p>
-            <p style={{fontSize:12,color:"#4C1D95",lineHeight:1.6,marginBottom:6}}>No seu <code>app.js</code>, configure a rota <code>/api-docs</code> usando a CDN para evitar o famoso erro de <code>Unexpected token '&lt;'</code> do Vercel:</p>
+            <p style={{fontSize:12,color:"#4C1D95",lineHeight:1.6,marginBottom:6}}>No seu arquivo <code>src/app.js</code>, cole este código. Ele usa o CDN do Cloudflare (para carregar o CSS online) evitando o erro de tela branca no Vercel:</p>
             <Code code={`const express = require('express');
 const app = express();
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');
 
-// 1. Usar links de CDN (Cloudflare) para evitar erro no Vercel
+// ... suas rotas normais aqui ...
+
+// 1. Usar links de CDN (Cloudflare) para os arquivos estáticos do Swagger
 const CSS_URL = "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.1.0/swagger-ui.min.css";
 const JS_URL = "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.1.0/swagger-ui-bundle.min.js";
 const JS_URL2 = "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.1.0/swagger-ui-standalone-preset.min.js";
@@ -243,7 +276,22 @@ const JS_URL2 = "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.1.0/swagger
 const swaggerOptions = { customCssUrl: CSS_URL, customJs: [JS_URL, JS_URL2] };
 
 // 2. Subir a rota!
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, swaggerOptions));`} title="app.js" />
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, swaggerOptions));
+
+module.exports = app;`} title="src/app.js" />
+          </div>
+
+          <div style={{background:C.yellowBg,borderRadius:10,padding:14,border:"1px solid #FCD34D",marginBottom:16}}>
+            <p style={{fontSize:13,color:"#92400E",fontWeight:600,marginBottom:4}}>Passo D: Aviso no Terminal (opcional e elegante)</p>
+            <p style={{fontSize:12,color:"#92400E",lineHeight:1.6,marginBottom:6}}>Para ficar mais profissional, abra o seu arquivo <code>src/server.js</code> e adicione um aviso no seu <code>console.log()</code> principal alertando qual é o link da documentação (api-docs):</p>
+            <Code code={`  app.listen(PORT, async () => {
+    console.log('\\n===========================================');
+    console.log('   🐾 PetVida API - Servidor Iniciado');
+    console.log('===========================================\\n');
+    console.log(\`🌐 URL base: http://localhost:\${PORT}\`);
+    console.log(\`📘 Documentação Swagger: http://localhost:\${PORT}/api-docs\`);
+    // ... restante do código
+  });`} title="src/server.js" />
           </div>
 
           <div style={{textAlign:"center",marginTop:14}}>
